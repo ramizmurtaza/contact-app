@@ -1,11 +1,25 @@
-const express = require('express');
+// server.js
+import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
+
+import { connectDB } from "./src/config/database.js";
+
 const app = express();
-require('dotenv').config();
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello Express!');
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json({ message: "API is running..." });
 });
 
-app.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
-});
+const startServer = async () => {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  });
+};
+
+startServer();
