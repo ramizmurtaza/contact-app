@@ -2,10 +2,33 @@
   "name": "contact-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "cross-env NODE_ENV=development nodemon --watch \"src/**/*.ts\" --exec \"node --loader ts-node/esm\" src/index.ts",
+    "uat": "cross-env NODE_ENV=uat node dist/index.js",
+    "production": "cross-env NODE_ENV=production node dist/index.js",
+    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "start:staging": "cross-env NODE_ENV=staging node dist/index.js",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "migration:generate": "sequelize-cli migration:generate --name",
+    "migration:run": "sequelize-cli db:migrate",
+    "migration:run:uat": "sequelize-cli db:migrate --env uat",
+    "migration:run:prod": "sequelize-cli db:migrate --env production",
+    "migration:revert": "sequelize-cli db:migrate:undo",
+    "migration:revert:all": "sequelize-cli db:migrate:undo:all",
+    "migration:run:to": "sequelize-cli db:migrate --to",
+    "migration:revert:to": "sequelize-cli db:migrate:undo --to",
+    "seed:generate": "sequelize-cli seed:generate --name",
+    "seed:run": "sequelize-cli db:seed:all",
+    "seed:run:uat": "sequelize-cli db:seed:all --env uat",
+    "seed:run:prod": "sequelize-cli db:seed:all --env production",
+    "seed:undo": "sequelize-cli db:seed:undo",
+    "seed:undo:all": "sequelize-cli db:seed:undo:all",
+    "seed:run:one": "sequelize-cli db:seed --seed",
+    "seed:undo:one": "sequelize-cli db:seed:undo --seed"
   },
   "repository": {
     "type": "git",
@@ -20,9 +43,20 @@
   },
   "homepage": "https://github.com/ramizmurtaza/contact-app#readme",
   "dependencies": {
+    "@faker-js/faker": "^10.1.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mysql2": "^3.15.3",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.25",
+    "@types/node": "^20.19.25",
+    "cross-env": "^10.1.0",
+    "nodemon": "^3.1.11",
+    "sequelize-cli": "^6.6.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
