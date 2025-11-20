@@ -15,7 +15,7 @@ const startServer = async () => {
   const connected = await connectDB();
   if (connected) {
     registerModels(sequelize);
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ alter: true }); // Apply schema changes to existing tables without the help of migrations
   } else {
     console.warn('Skipping sequelize.sync due to database connection failure');
   }
