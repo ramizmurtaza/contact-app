@@ -29,6 +29,7 @@ export type UserCreationAttributes = Optional<
 
 // 🔹 User model class definition
 export class User extends Model<UserAttributes, UserCreationAttributes> {
+  
   uuid!: string | null;
   first_name!: string | null;
   last_name!: string | null;
